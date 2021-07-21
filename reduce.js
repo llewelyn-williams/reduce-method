@@ -73,10 +73,51 @@ const teamMembers = [
     name: 'Kelly',
     profession: 'Designer',
     yrsExperience: 3
+  },
+  {
+    name: 'Mark',
+    profession: 'Manager',
+    yrsExperience: 10
   }
 ];
 
 // Totaling a specific object property
-
+let totalExperience = teamMembers.reduce((acc, curr) => acc + curr.yrsExperience, 0);
+console.log(totalExperience);
 
 // Grouping by a property, and totaling it too
+let experienceByProfession = teamMembers.reduce((acc, curr) => {
+  let key = curr.profession;
+  if (!acc[key]) {
+    acc[key] = curr.yrsExperience;
+  } else {
+    acc[key] += curr.yrsExperience;
+  }
+  return acc;
+}, {});
+
+console.log(experienceByProfession)
+
+//Produce an object with each job title as property and an array of names with each job
+let jobRoles = teamMembers.reduce((acc, curr) => {
+  let key = curr.profession;
+  if (!acc[key]) {
+    acc[key] = [curr.name];
+  } else {
+    acc[key].push(curr.name);
+  }
+  return acc;
+},{});
+console.log(jobRoles);
+
+// Filter out only people of certain profession and the one with the most experience in that.
+// For example, pull out Ariel.
+let developers = teamMembers.filter(member => member.profession === "Developer");
+console.log(developers);
+let mostExpereicendDeveloper = developers.reduce((acc, curr) => {
+  if (curr.yrsExperience > acc.yrsExperience){
+    acc = curr;
+  }
+  return acc;
+});
+console.log(mostExpereicendDeveloper);
